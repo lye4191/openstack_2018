@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href= "css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+    <div class="container" style="padding-top:80px;">
+        <div class="col-md-12">
+            <h3 class="text-center">openstack IoT</h3>
+            <hr>
+            <div class="col-md-12">
+                <p class="lead text-center">사용하실 기능을 선택하세요.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="btn-group" role="group" aria-label="Basic example" style="padding-top: 50px;">
+            <button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="machine">기계설비 및 전력 제어</button>
+            <button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="system">관제 시스템 제어</button>
+            <button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="bmes">BMES</button>
+            <button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="outside">외부 시스템 제어</button>
+        </div> 
+    </div>
+    <div class="container" style="margin: 0 auto;">
+       <ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="machineList">
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine2" />
+            <label class="list-group-item" for="machine2">난방 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine3" />
+            <label class="list-group-item" for="machine3">냉동기 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine4" />
+            <label class="list-group-item" for="machine4">보일러 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine5" />
+            <label class="list-group-item" for="machine5">조명 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine6" />
+            <label class="list-group-item" for="machine6">공조 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine7" />
+            <label class="list-group-item" for="machine7">블라인드 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine8" />
+            <label class="list-group-item" for="machine8">냉방 제어</label>
+            <input type="checkbox" name="CheckBoxInputName" value="Value1" id="machine9" />
+            <label class="list-group-item" for="machine9">전력 제어</label>
+
+        </ul>
+        <ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="systemList">
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="system1" />
+                <label class="list-group-item" for="system1">통합 관제</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="system2" />
+                <label class="list-group-item" for="system2">알람 관리</label>
+        </ul>
+        <ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="bmesList">
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="bmes1" />
+                <label class="list-group-item" for="bmes1">에너지 사용량 분석</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="bmes2" />
+                <label class="list-group-item" for="bmes2">에너지 소비 분석</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="bmes3" />
+                <label class="list-group-item" for="bmes3">에너지 평가</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="bmes4" />
+                <label class="list-group-item" for="bmes4">에너지 사용 개선사항 도출</label>
+
+        </ul>
+        <ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="outsideList">
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="outside1" />
+                <label class="list-group-item" for="outside1">주차 관제</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="outside2" />
+                <label class="list-group-item" for="outside2">방재</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="outside3" />
+                <label class="list-group-item" for="outside3">출입 통제</label>
+                <input type="checkbox" name="CheckBoxInputName" value="Value1" id="outside4" />
+                <label class="list-group-item" for="outside4">CCTV</label>
+        </ul>
+    </div>
+    <div class="container">
+        <form action="/select/createstack" method="post">
+            <div class="col-md-6 col-md-offset-3 input-group"> 
+                <input type="submit" id="submit" class="btn btn-danger" style="height: 50px; width: 500px; font-size: 18px" value="입력">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function btn_click(id) {
+
+            if (id =="machine") var x = document.getElementById("machineList");
+            else if (id =="system") var x = document.getElementById("systemList");
+            else if (id == "bmes") var x = document.getElementById("bmesList");
+            else if (id == "outside") var x = document.getElementById("outsideList");
+            if(x.style.visibility == "hidden"){
+                x.style.visibility = "visible";
+            }
+            else {
+                x.style.visibility = "hidden";
+            }
+        }
+
+    </script>
+</body>
+</html>

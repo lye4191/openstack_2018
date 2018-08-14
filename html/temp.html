@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href= "css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+    <div class="container">
+        <h3 class="text-center">OpenStack IOT</h3>
+        <hr>
+        <div class="col-xs-12">
+            <p class="lead">I have been using an Android Device for the last few days and am falling in love with the switchs they use in Android. I loved them so much I wanted to port them over to Bootstrap so I could use them in future projects. I did some research and all of the ones I could find used custom colors which prevented them from working with Bootswatch or required you to edit the css files to make them match your theme. I wanted to work around that.</p>
+            <p class="lead">Please use the theme picker above to see how this snippet works with bootswatch themes. I hope you enjoy this snippet.</p>    
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">모듈 선택</div>
+                        <form action="/select/createstack">
+                            <!-- List group -->
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    조명 제어
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionPrimaryDefault" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionPrimaryDefault" class="label-default"></label>
+                                    </div>
+                                          
+                                </li>
+                                <li class="list-group-item">
+                                    전력 제어
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionPrimary" class="label-primary"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    냉방 제어
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionSuccess" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionSuccess" class="label-success"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    Bootstrap Switch Info
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionInfo" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionInfo" class="label-info"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    Bootstrap Switch Warning
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionWarning" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionWarning" class="label-warning"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    Bootstrap Switch Danger
+                                    <div class="material-switch pull-right">
+                                        <input id="someSwitchOptionDanger" name="someSwitchOption001" type="checkbox"/>
+                                        <label for="someSwitchOptionDanger" class="label-danger"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <input type="submit" id="submit" class="form-control" value="입력">  
+                        </form>
+                </div>            
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
