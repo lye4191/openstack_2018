@@ -3,13 +3,14 @@ var fs = require('fs')
     ,express = require('express')
     ,bodyParser = require('body-parser');
 const path = require('path');
+
 /* REST API (POST) 사용 */
 var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.set('view engine', 'pug'); // (1)
-app.set('views', path.join(__dirname, 'views')); // (2)
+app.set('view engine', 'pug'); 
+app.set('views', path.join(__dirname, 'views')); 
 
 /* json 파일 object 파일로 변환 */
 var contents = fs.readFileSync("json/token.json");
@@ -28,15 +29,12 @@ object.headers = jsonheaders;
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
-//var auth = true;
-
 /* 메인 페이지 */
 app.get('/', function(req, res){
     fs.readFile('index.html', function(err,data){
         res.writeHead(200, {"Content-Type" : "text/html"});
         res.end(data);
     });
-
 })
 
 app.get('/select', function(req, res){
@@ -44,7 +42,6 @@ app.get('/select', function(req, res){
         res.writeHead(200, {"Content-Type" : "text/html"});
         res.end(data);
     });
-
 })
 
 /* 로그인 */
