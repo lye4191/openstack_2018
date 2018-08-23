@@ -1,83 +1,121 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link href= "css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-        <link rel="stylesheet" href="css/styles.css">
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<link rel="stylesheet" href="css/styles.css">
 
 </head>
+
 <body>
-    <div class="container">
-        <h3 class="text-center">OpenStack IOT</h3>
-        <hr>
-        <div class="col-xs-12">
-            <p class="lead">I have been using an Android Device for the last few days and am falling in love with the switchs they use in Android. I loved them so much I wanted to port them over to Bootstrap so I could use them in future projects. I did some research and all of the ones I could find used custom colors which prevented them from working with Bootswatch or required you to edit the css files to make them match your theme. I wanted to work around that.</p>
-            <p class="lead">Please use the theme picker above to see how this snippet works with bootswatch themes. I hope you enjoy this snippet.</p>    
-        </div>
-    </div>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-                <div class="panel panel-default">
-                    <!-- Default panel contents -->
-                    <div class="panel-heading">모듈 선택</div>
-                        <form action="/select/createstack">
-                            <!-- List group -->
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    조명 제어
-                                    <div class="material-switch pull-right">
-                                        <input id="someSwitchOptionPrimaryDefault" name="someSwitchOption001" type="checkbox"/>
-                                        <label for="someSwitchOptionPrimaryDefault" class="label-default"></label>
-                                    </div>
-                                          
-                                </li>
-                                <li class="list-group-item">
-                                    전력 제어
-                                    <div class="material-switch pull-right">
-                                        <input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
-                                        <label for="someSwitchOptionPrimary" class="label-primary"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    냉방 제어
-                                    <div class="material-switch pull-right">
-                                        <input id="someSwitchOptionSuccess" name="someSwitchOption001" type="checkbox"/>
-                                        <label for="someSwitchOptionSuccess" class="label-success"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    Bootstrap Switch Info
-                                    <div class="material-switch pull-right">
-                                        <input id="someSwitchOptionInfo" name="someSwitchOption001" type="checkbox"/>
-                                        <label for="someSwitchOptionInfo" class="label-info"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    Bootstrap Switch Warning
-                                    <div class="material-switch pull-right">
-                                        <input id="someSwitchOptionWarning" name="someSwitchOption001" type="checkbox"/>
-                                        <label for="someSwitchOptionWarning" class="label-warning"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    Bootstrap Switch Danger
-                                    <div class="material-switch pull-right">
-                                        <input id="someSwitchOptionDanger" name="someSwitchOption001" type="checkbox"/>
-                                        <label for="someSwitchOptionDanger" class="label-danger"></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <input type="submit" id="submit" class="form-control" value="입력">  
-                        </form>
-                </div>            
-            </div>
-        </div>
-    </div>
+	<div class="container" style="padding-top:80px;">
+		<div class="col-md-12">
+			<h3 class="text-center">openstack IoT</h3>
+			<hr>
+			<div class="col-md-12">
+				<p class="lead text-center">사용하실 기능을 선택하세요.</p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="btn-group" role="group" aria-label="Basic example" style="padding-top: 50px;">
+			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="machine">기계설비 및 전력 제어</button>
+			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="system">관제 시스템 제어</button>
+			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="bmes">BMES</button>
+			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="outside">외부 시스템 제어</button>
+		</div>
+	</div>
+
+	<form action="/select/speed" method="post">
+		<div class="container" style="margin: 0 auto;">
+			<ul class="list-group list-yuni" style="visibility: hidden;" id="machineList">
+				<input type="checkbox" name="machineName" value="난방 제어" id="machine1" />
+				<label class="list-group-item" for="machine1">난방 제어</label>
+				<input type="checkbox" name="machineName" value="냉동기 제어" id="machine2" />
+				<label class="list-group-item" for="machine2">냉동기 제어</label>
+				<input type="checkbox" name="machineName" value="보일러 제어" id="machine3" />
+				<label class="list-group-item" for="machine3">보일러 제어</label>
+				<input type="checkbox" name="machineName" value="조명 제어" id="machine4" />
+				<label class="list-group-item" for="machine4">조명 제어</label>
+				<input type="checkbox" name="machineName" value="공조 제어" id="machine5" />
+				<label class="list-group-item" for="machine5">공조 제어</label>
+				<input type="checkbox" name="machineName" value="블라인드 제어" id="machine6" />
+				<label class="list-group-item" for="machine6">블라인드 제어</label>
+				<input type="checkbox" name="machineName" value="냉방 제어" id="machine7" />
+				<label class="list-group-item" for="machine7">냉방 제어</label>
+				<input type="checkbox" name="machineName" value="전력 제어" id="machine8" />
+				<label class="list-group-item" for="machine8">전력 제어</label>
+
+			</ul>
+			<ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="systemList">
+				<input type="checkbox" name="systemName" value="통합 관제" id="system1" />
+				<label class="list-group-item" for="system1">통합 관제</label>
+				<input type="checkbox" name="systemName" value="알람 관리" id="system2" />
+				<label class="list-group-item" for="system2">알람 관리</label>
+			</ul>
+			<ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="bmesList">
+				<input type="checkbox" name="bmesName" value="에너지 사용량 분석" id="bmes1" />
+				<label class="list-group-item" for="bmes1">에너지 사용량 분석</label>
+				<input type="checkbox" name="bmesName" value="에너지 소비 분석" id="bmes2" />
+				<label class="list-group-item" for="bmes2">에너지 소비 분석</label>
+				<input type="checkbox" name="bmesName" value="에너지 평가" id="bmes3" />
+				<label class="list-group-item" for="bmes3">에너지 평가</label>
+				<input type="checkbox" name="bmesName" value="에너지 사용 개선사항 도출" id="bmes4" />
+				<label class="list-group-item" for="bmes4">에너지 사용 개선사항 도출</label>
+
+			</ul>
+			<ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="outsideList">
+				<input type="checkbox" name="outsideName" value="주차 관제" id="outside1" />
+				<label class="list-group-item" for="outside1">주차 관제</label>
+				<input type="checkbox" name="outsideName" value="방재" id="outside2" />
+				<label class="list-group-item" for="outside2">방재</label>
+				<input type="checkbox" name="outsideName" value="출입 통제" id="outside3" />
+				<label class="list-group-item" for="outside3">출입 통제</label>
+				<input type="checkbox" name="outsideName" value="CCTV" id="outside4" />
+				<label class="list-group-item" for="outside4">CCTV</label>
+			</ul>
+		</div>
+		<div class="container">
+				<div class="col-md-6 col-md-offset-3 input-group">
+					<ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="outsideList">
+						<input type="checkbox" name="outsideName" value="주차 관제" id="outside1" />
+						<label class="list-group-item" for="outside1">주차 관제</label>
+						<input type="checkbox" name="outsideName" value="방재" id="outside2" />
+						<label class="list-group-item" for="outside2">방재</label>
+						<input type="checkbox" name="outsideName" value="출입 통제" id="outside3" />
+						<label class="list-group-item" for="outside3">출입 통제</label>
+						<input type="checkbox" name="outsideName" value="CCTV" id="outside4" />
+						<label class="list-group-item" for="outside4">CCTV</label>
+					</ul>
+				</div>
+			</div>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3 input-group">
+				<input type="submit" id="submit" class="btn btn-danger" style="height: 50px; width: 500px; font-size: 18px" value="입력">
+			</div>
+		</div>
+	</form>
+
+	<script>
+		function btn_click(id) {
+
+			if (id == "machine") var x = document.getElementById("machineList");
+			else if (id == "system") var x = document.getElementById("systemList");
+			else if (id == "bmes") var x = document.getElementById("bmesList");
+			else if (id == "outside") var x = document.getElementById("outsideList");
+			if (x.style.visibility == "hidden") {
+				x.style.visibility = "visible";
+			}
+			else {
+				x.style.visibility = "hidden";
+			}
+		}
+
+	</script>
 </body>
 
 </html>

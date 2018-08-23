@@ -206,6 +206,12 @@ a:hover { text-decoration: none }
     font-size: 18px;
 }
 
+.btn-style-speed-yuni {
+    height: 70px;
+    width: 200px; 
+    font-size: 18px;
+}
+
 .list-group-item {
     user-select: none;
   }
@@ -254,4 +260,36 @@ a:hover { text-decoration: none }
   
   .list-group input[type="radio"]:checked + .list-group-item:before {
     color: inherit;
+  }
+
+  .list-yuni{
+    width: 269px; 
+    float: left; 
+    border-style: solid;
+    border-width: 1px; 
+    border-color: #D5D5D5;
+    font-size: 13px;
+    font-color: #353535
+  }
+
+  .list-speed-yuni{
+    width: 200px; 
+    float: left; 
+    border-style: solid;
+    border-width: 1px; 
+    border-color: #D5D5D5;
+    font-size: 13px;
+    font-color: #353535
+  }
+  .list-item-yuni{
+    padding: 10px;
+    margin-left: 10px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #D5D5D5;
+  }
+  .number-select{
+    float: right; 
+    margin-right: 10px;
+    margin-top:10px;
   }

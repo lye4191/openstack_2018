@@ -2,13 +2,14 @@
 var fs = require('fs')
     ,express = require('express')
     ,bodyParser = require('body-parser');
-
+const path = require('path');
 /* REST API (POST) 사용 */
 var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
+app.set('view engine', 'pug'); // (1)
+app.set('views', path.join(__dirname, 'views')); // (2)
 
 /* json 파일 object 파일로 변환 */
 var contents = fs.readFileSync("json/token.json");
@@ -38,7 +39,6 @@ app.get('/', function(req, res){
 
 })
 
-/*  */
 app.get('/select', function(req, res){
     fs.readFile('select.html', function(err,data){
         res.writeHead(200, {"Content-Type" : "text/html"});
@@ -73,27 +73,26 @@ app.post('/select', function(req, res, next){
             stream.write(jsonValue['x-subject-token']);
             stream.end();
         });
-        // token 인증
-       // if(jsonValue['x-subject-token'] == undefined ) auth = false;
     });
-
-    //res.writeHead(200, {"Content-Type": "text/html"});
-    //res.end(' id: '+ id + ' pwd: ' + pwd);
-    //console.log("auth = ", auth);
     res.redirect('/select');
-   
-    /*
-    fs.readFile('main.html', function(err,data){
-        res.writeHead(200, {'Content-Type' : 'text/html'});
-        res.end(data);
-    });
-    */
-
 });
 
-app.get('/select/createstack', function(req, res){
+app.get('/select/speed', function(req, res){
 
-    fs.readFile('createstack.html', function(err,data){
+    fs.readFile('selectspeed.html', function(err, data){
+        res.writeHead(200, {"Content-Type" : "text/html"});
+        res.end(data);
+    });
+});
+
+app.post('/select/speed', function(req, res, next){
+    console.log(req.body);
+    res.redirect('/select/speed');
+    //res.render('selectspeed', {name : req.body.machineName , nameq : req.body.systemName});
+});
+
+app.get('/select/speed/createstack', function(req, res){
+    fs.readFile('createstack.pug', function(err,data){
         res.writeHead(200, {"Content-Type" : "text/html"});
         res.end(data);
     });
@@ -101,7 +100,9 @@ app.get('/select/createstack', function(req, res){
 
 });
 
-app.post('/select/createstack', function(req, res, next){
+app.post('/select/speed/createstack', function(req, res, next){
+
+    console.log(req.body);
 
     heatJsonContent.stack_name = req.body.stackname;
     heatJsonContent.parameters.flavor = req.body.flavor;
@@ -117,10 +118,15 @@ app.post('/select/createstack', function(req, res, next){
         console.log("CompleteCreateStack!");
     });
 
-    res.redirect('/select/createstack');
+    var systemJson = req.body.systemName;
+    var machineJson = req.body.machineName;
+    var bmesJson = req.body.bmesName;
+    var outsideJson = req.body.outsideName;
+
+    res.render('createstack', {name : req.body.systemName, nameq : req.body.machineName});
 });
 
-app.listen(3384, function(){
+app.listen(3402, function(){
     console.log('Server start.');
 });
 
