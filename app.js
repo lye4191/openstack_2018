@@ -126,7 +126,7 @@ app.post('/select/speed/createstack', function(req, res, next){
     res.render('createstack', {name : req.body.systemName, nameq : req.body.machineName});
 });
 
-app.listen(3402, function(){
+app.listen(3000, function(){
     console.log('Server start.');
 });
 
