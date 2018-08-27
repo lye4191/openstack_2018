@@ -29,6 +29,8 @@ object.headers = jsonheaders;
 var Client = require('node-rest-client').Client;
 var client = new Client();
 
+var countNum = 0;
+
 /* 메인 페이지 */
 app.get('/', function(req, res){
     fs.readFile('index.html', function(err,data){
@@ -46,7 +48,7 @@ app.get('/select', function(req, res){
 
 /* 로그인 */
 app.post('/select', function(req, res, next){
-    console.log(req.body);
+    //console.log(req.body);
     var id = req.body.id;
     var pwd = req.body.pwd;
 
@@ -74,21 +76,28 @@ app.post('/select', function(req, res, next){
     res.redirect('/select');
 });
 
-app.get('/select/speed', function(req, res){
+app.get('/select/nonfunc', function(req, res){
 
-    fs.readFile('selectspeed.html', function(err, data){
+    fs.readFile('nonfunctional.html', function(err, data){
         res.writeHead(200, {"Content-Type" : "text/html"});
         res.end(data);
     });
 });
 
-app.post('/select/speed', function(req, res, next){
-    console.log(req.body);
-    res.redirect('/select/speed');
+app.post('/select/nonfunc', function(req, res, next){
+    // 총 기기 수
+    //var countNum = 0;
+    var funcContent = JSON.parse(JSON.stringify(req.body));
+    countNum = countMachine(funcContent);
+    
+
+    //function select
+    res.redirect('/select/nonfunc');
     //res.render('selectspeed', {name : req.body.machineName , nameq : req.body.systemName});
+
 });
 
-app.get('/select/speed/createstack', function(req, res){
+app.get('/select/nonfunc/createstack', function(req, res){
     fs.readFile('createstack.pug', function(err,data){
         res.writeHead(200, {"Content-Type" : "text/html"});
         res.end(data);
@@ -97,13 +106,18 @@ app.get('/select/speed/createstack', function(req, res){
 
 });
 
-app.post('/select/speed/createstack', function(req, res, next){
+app.post('/select/nonfunc/createstack', function(req, res, next){
 
     console.log(req.body);
 
-    heatJsonContent.stack_name = req.body.stackname;
-    heatJsonContent.parameters.flavor = req.body.flavor;
-    heatJsonContent.template.resources.hello_world.properties.image = req.body.image;
+    var flavor;
+    var image="09e1182b-d088-4a1b-bdc8-b6b9e67cbcd3";
+    var nonfuncContent = JSON.parse(JSON.stringify(req.body));
+    flavor = DistinctResource(nonfuncContent, countNum);
+
+    heatJsonContent.stack_name = req.body.fullname;
+    heatJsonContent.parameters.flavor = flavor;
+    heatJsonContent.template.resources.hello_world.properties.image = image;
     heatObject.data = heatJsonContent;
 
     var getToken = fs.readFileSync("token.txt", 'utf8');
@@ -115,6 +129,8 @@ app.post('/select/speed/createstack', function(req, res, next){
         console.log("CompleteCreateStack!");
     });
 
+    console.log("#####", heatObject);
+
     var systemJson = req.body.systemName;
     var machineJson = req.body.machineName;
     var bmesJson = req.body.bmesName;
@@ -123,10 +139,66 @@ app.post('/select/speed/createstack', function(req, res, next){
     res.render('createstack', {name : req.body.systemName, nameq : req.body.machineName});
 });
 
-app.listen(3000, function(){
+app.listen(3017, function(){
     console.log('Server start.');
 });
 
 app.all('*', function(req, res) {
 	res.status(404).send('<h1>ERROR - 페이지를 찾을 수 없습니다.</h1>');
 });
+
+
+function countMachine(data){
+
+    var machineJson = data.machineName;
+    var outsideJson = data.outsideName;
+    var Count=0;
+
+    for(var i=0; i<machineJson.length; i++){
+        Count += parseInt(machineJson[i],10);
+    }
+    for(var j=0; j<outsideJson.length; j++){
+        Count += parseInt(outsideJson[j],10);
+    }
+    
+    //console.log("count!!!" , Count);
+    return Count;
+
+}
+
+
+function DistinctResource(data, count){
+
+    var speed = data.speedName;
+    var flavor;
+    if(speed == "LOW" && ((1<=count) && (count <=20))) 
+    if((1<=count) && (count <= 20))
+    {
+        if(speed == "LOW") flavor = "m1.tiny";
+        else if(speed == "MIDDLE") flavor = "m1.custom2";
+        else flavor = "m1.small";
+    }
+    if((21<=count) && (count <= 40))
+    {
+        if(speed == "LOW") flavor = "m1.custom2";
+        else if(speed == "MIDDLE") flavor = "m1.small";
+        else flavor = "m1.medium";
+    }
+    if((41<=count) && (count <= 60))
+    {
+        if(speed == "LOW") flavor = "m1.small";
+        else if(speed == "MIDDLE") flavor = "m1.medium";
+        else flavor = "m1.large";
+    }
+    if((61<=count) && (count <= 80))
+    {
+        if(speed == "LOW") flavor = "m1.medium";
+        else flavor = "m1.large";
+    }
+    if((81<=count) && (count <= 100))
+    {
+        flavor = "m1.xlarge";
+    }
+
+    return flavor;
+}

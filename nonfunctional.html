@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../css/styles.css">
+
+</head>
+
+<body>
+	<div class="header">
+	<input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+	<label for="openSidebarMenu" class="sidebarIconToggle">
+		<div class="spinner diagonal part-1"></div>
+		<div class="spinner horizontal"></div>
+		<div class="spinner diagonal part-2"></div>
+  	</label>
+  <div id="sidebarMenu">
+	<ul class="sidebarMenuInner">
+	  <li>OPENSTACK <span>IOT</span></li>
+	  <li><a href="https://vanila.io" target="_blank">기기 등록</a></li>
+	  <li><a href="https://instagram.com/plavookac" target="_blank">기기 목록</a></li>
+	  <li><a href="https://twitter.com/plavookac" target="_blank">Twitter</a></li>
+	  <li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">VM 목록</a></li>
+	  <li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>
+	</ul>
+  </div>
+</div>
+	<div class="container" style="padding-top:80px;">
+		<div class="col-md-12">
+			<h3 class="text-center">openstack IoT</h3>
+			<hr>
+			<div class="col-md-12">
+				<p class="lead text-center">사용하실 가상머신의 속도와 이름을 입력하세요.</p>
+				<p class="lead text-center">* 은 필수 입력 사항입니다. </p>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="btn-group" role="group" aria-label="Basic example" style="padding-top: 50px;">
+			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="name" onclick="btn_click(this.id)">이름 *</button>
+			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="speed" onclick="btn_click(this.id)">응답시간 *</button>
+			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="auto" onclick="btn_click(this.id)">고가용성 지원</button>
+			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="speed" onclick="btn_click(this.id)">요구사항2</button>
+		</div>
+	</div>
+
+	<form action="/select/nonfunc/createstack" method="post">
+		<div class="container" style="margin: 0 auto;">
+			<ul class="list-yuni" style="visibility: hidden;" id="NameInput">
+				<input type="text" name="fullname" style="border: 0px solid #D5D5D5; height:40px;" placeholder="가상머신 이름 입력..."><br>
+			</ul>
+			<ul class="list-group list-yuni" style="visibility: hidden;" id="speedList">
+				<input type="checkbox" name="speedName" value="LOW" id="speed1" onclick="check_only(this)" checked/>
+				<label class="list-group-item" for="speed1">LOW</label>
+				<input type="checkbox" name="speedName" value="MIDDLE" id="speed2" onclick="check_only(this)"/>
+				<label class="list-group-item" for="speed2">MIDDLE</label>
+				<input type="checkbox" name="speedName" value="HIGH" id="speed3" onclick="check_only(this)"/>
+				<label class="list-group-item" for="speed3">HIGH</label>
+			</ul>
+			<ul class="list-group list-yuni" style="visibility: hidden;" id="autoscaling">
+				<input type="checkbox" name="autoName" value="미사용" id="autoscaling1" onclick="check_only(this)" />
+				<label class="list-group-item" for="autoscaling1">미사용</label>
+				<input type="checkbox" name="autoName" value="사용" id="autoscaling2" onclick="check_only(this)" checked />
+				<label class="list-group-item" for="autoscaling2">사용</label>
+			</ul>
+		</div>
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3 input-group">
+				<br><br><br><br>
+				<input type="submit" id="submit" class="btn btn-danger" style="height: 50px; width: 500px; font-size: 18px" value="입력">
+			</div>
+		</div>
+	</form>
+
+	<script type="text/javascript">
+		function btn_click(id){
+
+			if(id == "name") var x = document.getElementById("NameInput");
+			else if(id =="speed") var x = document.getElementById("speedList");
+			else if(id ="auto") var x = document.getElementById("autoscaling")
+			if(x.style.visibility == "hidden"){
+				x.style.visibility = "visible";
+			}
+			else{
+				x.style.visibility = "hidden";
+			}
+		}
+		function check_only(chk){
+			if(chk.name == "speedName") var obj = document.getElementsByName("speedName");
+			else if(chk.name == "autoName") var obj = document.getElementsByName("autoName");
+			for(var i=0; i<obj.length; i++){
+				if(obj[i] != chk){
+					obj[i].checked = false
+				}
+			}
+		}
+
+		
+	</script>
+</body>
+
+</html>

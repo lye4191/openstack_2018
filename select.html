@@ -12,87 +12,89 @@
 </head>
 
 <body>
-<div class="header"></div>
-  <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-  <label for="openSidebarMenu" class="sidebarIconToggle">
-    <div class="spinner diagonal part-1"></div>
-    <div class="spinner horizontal"></div>
-    <div class="spinner diagonal part-2"></div>
-  </label>
+<div class="header">
+	<input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+	<label for="openSidebarMenu" class="sidebarIconToggle">
+		<div class="spinner diagonal part-1"></div>
+		<div class="spinner horizontal"></div>
+		<div class="spinner diagonal part-2"></div>
+  	</label>
   <div id="sidebarMenu">
-    <ul class="sidebarMenuInner">
-      <li>Jelena Jovanovic <span>Web Developer</span></li>
-      <li><a href="https://vanila.io" target="_blank">Company</a></li>
-      <li><a href="https://instagram.com/plavookac" target="_blank">Instagram</a></li>
-      <li><a href="https://twitter.com/plavookac" target="_blank">Twitter</a></li>
-      <li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">YouTube</a></li>
-      <li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>
-    </ul>
+	<ul class="sidebarMenuInner">
+	  <li>OPENSTACK <span>IOT</span></li>
+	  <li><a href="https://vanila.io" target="_blank">기기 등록</a></li>
+	  <li><a href="https://instagram.com/plavookac" target="_blank">기기 목록</a></li>
+	  <li><a href="https://twitter.com/plavookac" target="_blank">VM 목록</a></li>
+	  <li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">youtube</a></li>
+	  <li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>
+	</ul>
   </div>
+</div>
+
 	<div class="container" style="padding-top:80px;">
 		<div class="col-md-12">
 			<h3 class="text-center">openstack IoT</h3>
 			<hr>
 			<div class="col-md-12">
-				<p class="lead text-center">사용하실 기능의 기기 개수를 입력하세요.</p>
+				<p class="lead text-center">사용하실 기능의 기기 선택 또는 기기 개수를 입력하세요.</p>
+				<p class="lead text-center">적어도 하나 이상의 기기를 입력해야 합니다.</p>
 			</div>
 		</div>
 	</div>
 	<div class="container">
 		<div class="btn-group" role="group" aria-label="Basic example" style="padding-top: 50px;">
-			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="machine">기계설비 및 전력 제어</button>
+			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="machine">기계 설비 및 제어 </button>
 			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="system">관제 시스템 제어</button>
 			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="bmes">BMES</button>
 			<button type="button" class="btn btn-danger btn-outline btn-style-yuni" onclick="btn_click(this.id)" id="outside">외부 시스템 제어</button>
 		</div>
 	</div>
 
-	<form action="/select/speed" method="post">
+	<form action="/select/nonfunc" method="post">
 		<div class="container" style="margin: 0 auto;">
 			<ul class="list-group list-yuni" style="visibility: hidden;" id="machineList">
 				<label for="machine1" style="padding: 10px; margin-left: 10px;">난방기 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine1" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine1" /><br>
 				<label for="machine2" style="padding: 10px; margin-left: 10px;">냉동기 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine2" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine2" /><br>
 				<label for="machine3" style="padding: 10px; margin-left: 10px;">보일러 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine3" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine3" /><br>
 				<label for="machine4" style="padding: 10px; margin-left: 10px;">조명 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine4" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine4" /><br>
 				<label for="machine5" style="padding: 10px; margin-left: 10px;">공조 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine5" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine5" /><br>
 				<label for="machine6" style="padding: 10px; margin-left: 10px;">블라인드 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine6" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine6" /><br>
 				<label for="machine7" style="padding: 10px; margin-left: 10px;">냉방 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine7" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine7" /><br>
 				<label for="machine8" style="padding: 10px; margin-left: 10px;">전력 제어</label>
-				<input type="number" class="number-select" name="machineName" min="0" max="50" id="machine8" /><br>
+				<input type="number" class="number-select" name="machineName" min="0" max="10" value="0" id="machine8" /><br>
 			</ul>
 
-			<ul class="list-group list-yuni" style="visibility: hidden;" id="systemList">
-				<label for="system1" style="padding: 10px; margin-left: 10px;">통합 관제</label>
-				<input type="number" class="number-select" name="systemName" min="0" max="50" id="system1" /><br>	
-				<label for="system2" style="padding: 10px; margin-left: 10px;">알람 관리</label>
-				<input type="number" class="number-select" name="systemName" min="0" max="50" id="system2" /><br>
+			<ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="systemList">
+					<input type="checkbox" name="systemName" value="통합 관제" id="system1" />
+					<label class="list-group-item" for="system1">통합 관제</label>
+					<input type="checkbox" name="systemName" value="알람 관리" id="system2" />
+					<label class="list-group-item" for="system2">알람 관리</label>
+					<input type="checkbox" name="systemName" value="주차 관제" id="system3" />
+					<label class="list-group-item" for="system3">주차 관제</label>
 			</ul>
-			<ul class="list-group list-yuni" style="visibility: hidden;" id="bmesList">
-				<label for="bmes1" style="padding: 10px; margin-left: 10px;">에너지 사용량 분석</label>
-				<input type="number" class="number-select" name="bmesName" min="0" max="50" id="bmes1" /><br>
-				<label for="bmes2" style="padding: 10px; margin-left: 10px;">에너지 소비 분석</label>
-				<input type="number" class="number-select" name="bmesName" min="0" max="50" id="bmes2" /><br>
-				<label for="bmes3" style="padding: 10px; margin-left: 10px;">에너지 평가</label>
-				<input type="number" class="number-select" name="bmesName" min="0" max="50" id="bmes3" /><br>
-				<label for="bmes4" style="padding: 10px; margin-left: 10px;">에너지 사용 개선사항 도출</label>
-				<input type="number" class="number-select" name="bmesName" min="0" max="50" id="bmes4" /><br>
+
+			<ul class="list-group" style="width: 269px; float: left; visibility: hidden;" id="bmesList">
+				<input type="checkbox" name="bmesName" value="에너지 사용량 분석" id="bmes1" />
+				<label class="list-group-item" for="bmes1">에너지 사용량 분석</label>
+				<input type="checkbox" name="bmesName" value="에너지 소비 분석" id="bmes2" />
+				<label class="list-group-item" for="bmes2">에너지 소비 분석</label>
+				<input type="checkbox" name="bmesName" value="에너지 평가" id="bmes3" />
+				<label class="list-group-item" for="bmes3">에너지 평가</label>
+				<input type="checkbox" name="bmesName" value="에너지 사용 개선사항 도출" id="bmes4" />
+				<label class="list-group-item" for="bmes4">에너지 사용 개선사항 도출</label>
 			</ul>
 			<ul class="list-group list-yuni" style="visibility: hidden;" id="outsideList">
-				<label for="outside1" style="padding: 10px; margin-left: 10px;">주차 관제</label>
-				<input type="number" class="number-select" name="outsideName" min="0" max="50" id="outside1" /><br>
-				<label for="outside2" style="padding: 10px; margin-left: 10px;">방재</label>
-				<input type="number" class="number-select" name="outsideName" min="0" max="50" id="outside2" /><br>
-				<label for="outside3" style="padding: 10px; margin-left: 10px;">출입 통제</label>
-				<input type="number" class="number-select" name="outsideName" min="0" max="50" id="outside3" /><br>
-				<label for="outside4" style="padding: 10px; margin-left: 10px;">CCTV</label>
-				<input type="number" class="number-select" name="outsideName" min="0" max="50" id="outside4" /><br>
+				<label for="outside1" style="padding: 10px; margin-left: 10px;">출입 통제</label>
+				<input type="number" class="number-select" name="outsideName" min="0" max="10" value="0" id="outside1" /><br>
+				<label for="outside2" style="padding: 10px; margin-left: 10px;">CCTV</label>
+				<input type="number" class="number-select" name="outsideName" min="0" max="10" value="0" id="outside2" /><br>
 			</ul>
 		</div>
 		<div class="container">

@@ -7,34 +7,5 @@
 	</head>
 	<body>
 		<h1>CreateStack #{name}</h1>
-		<form action="/select/createstack" method="post">
-			<label> Name : </label>
-			<input name = "stackname" type = "Text"><br>
-			<label> flavor : </label>
-			<select name="flavor">
-				<option value="m1.tiny">m1.tiny</option>
-				<option value="m1.custom2">m1.custom2</option>
-				<option value="m1.small">m1.small</option>
-				<option value="m1.medium">m1.medium</option>
-				<option value="m1.large">m1.large</option>
-				<option value="m1.nano">m1.nano</option>
-				<option value="m1.xlarge">m1.xlarge</option>
-				<option value="m1.micro">m1.micro</option>
-				<option value="m1.custom">m1.custom</option>
-				<option value="cirros256">cirros256</option>
-				<option value="ds512M">ds512M</option>
-				<option value="ds1G">ds1G</option>
-				<option value="ds2G">ds2G</option>
-				<option value="ds4G">ds4G</option>
-			</select>
-			<label> Image : </label>
-			<select name="image">
-				<option value="5a997d9f-0724-430e-8101-f3ebdee64f0d">cirros-0.3.5-x86_64-disk</option>
-				<option value="a02e336c-221e-4e41-83a5-3893af9ce502">fedora-software-config</option>
-				<option value="09e1182b-d088-4a1b-bdc8-b6b9e67cbcd3">ubuntu-xenial-server</option>
-			</select>
-			<br>
-			<input type = "submit" value = "전송">
-		</form>
 	</body>
 </html>
