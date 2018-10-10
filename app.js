@@ -127,6 +127,7 @@ app.post('/select/nonfunc/createstack', function(req, res, next){
     heatObject.headers = heatHeaders;
     client.post("http://164.125.70.26:801/heat-api/v1/48a1d38373a14cb9b89a6ddcea0ffc0f/stacks", heatObject, function(data, response) {
         console.log("CompleteCreateStack!");
+        res.redirect('http://' + host + '/dashboard/project/stacks/');
     });
 
     console.log("#####", heatObject);
