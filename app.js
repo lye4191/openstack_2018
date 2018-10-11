@@ -57,7 +57,7 @@ app.post('/select', function(req, res, next){
     jsonContent.auth.identity.password.user.password = pwd;
 
     /* api 보내기 */
-    client.registerMethod("postMethod", "http://164.125.70.26:801/identity/v3/auth/tokens", "POST");
+    client.registerMethod("postMethod", "http://164.125.70.13/identity/v3/auth/tokens", "POST");
     client.registerMethod("jsonMethod", "http://remote.site/rest/json/method", "GET");
     
     client.methods.postMethod(object, function (data, response) {
@@ -65,7 +65,7 @@ app.post('/select', function(req, res, next){
         // raw response
         var headers = JSON.stringify(response.headers);
         var jsonValue = JSON.parse(headers);
-        console.log("--------------- token value ---------------\n", jsonValue['x-subject-token']);
+        console.log("--------------- token value ---------------\n", jsonValue);
 
         var stream = fs.createWriteStream("token.txt");
         stream.once('open', function(fd){
@@ -125,7 +125,7 @@ app.post('/select/nonfunc/createstack', function(req, res, next){
     var heatHeaders = {"Content-Type" : "application/json",
                       "X-Auth-Token" :getToken};
     heatObject.headers = heatHeaders;
-    client.post("http://164.125.70.26:801/heat-api/v1/48a1d38373a14cb9b89a6ddcea0ffc0f/stacks", heatObject, function(data, response) {
+    client.post("http://164.125.70.13/heat-api/v1/36b011806ff042dba0a3b90e6e639ea2/stacks", heatObject, function(data, response) {
         console.log("CompleteCreateStack!");
         res.redirect('http://' + host + '/dashboard/project/stacks/');
     });
