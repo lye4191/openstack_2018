@@ -22,8 +22,12 @@
   <div id="sidebarMenu">
 	<ul class="sidebarMenuInner">
 	  <li>OPENSTACK <span>IOT</span></li>
-	  <li><a href="https://vanila.io" target="_blank">기기 등록</a></li>
-	  <li><a href="https://instagram.com/plavookac" target="_blank">기기 목록</a></li>
+		<li><a href="https://vanila.io" target="_blank">기기 등록</a></li>
+		<li>
+			<form action="/machinelist" method="post">
+				<button type="submit" name="machine" value="machine" class="btn-link">기기 목록</button>
+			</form>
+		</li>
 	  <li><a href="https://twitter.com/plavookac" target="_blank">VM 목록</a></li>
 	  <li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">youtube</a></li>
 	  <li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>

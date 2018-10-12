@@ -19,6 +19,7 @@ var jsonContent = JSON.parse(contents);
 var heatJsonContent = JSON.parse(heatContent);
 var object = {};
 var heatObject = {};
+var host = "164.125.70.13"; 
 
 object.data = jsonContent;
 heatObject.data = heatJsonContent;
@@ -65,7 +66,7 @@ app.post('/select', function(req, res, next){
         // raw response
         var headers = JSON.stringify(response.headers);
         var jsonValue = JSON.parse(headers);
-        console.log("--------------- token value ---------------\n", jsonValue);
+        console.log("--------------- token value ---------------\n", jsonValue['x-subject-token']);
 
         var stream = fs.createWriteStream("token.txt");
         stream.once('open', function(fd){
@@ -137,7 +138,22 @@ app.post('/select/nonfunc/createstack', function(req, res, next){
     var bmesJson = req.body.bmesName;
     var outsideJson = req.body.outsideName;
 
-    res.render('createstack', {name : req.body.systemName, nameq : req.body.machineName});
+   // res.render('createstack', {name : req.body.systemName, nameq : req.body.machineName});
+});
+
+app.get('/machinelist', function(req, res){
+    fs.readFile('machinelist.pug', function(err,data){
+        console.log("#####");
+        res.writeHead(200, {"Content-Type" : "text/html"});
+        res.end(data);
+    });
+
+});
+
+app.post('/machinelist', function(req, res, next){
+   // res.redirect('/machinelist');
+    res.render('machinelist');
+
 });
 
 app.listen(3017, function(){
@@ -172,7 +188,7 @@ function DistinctResource(data, count){
 
     var speed = data.speedName;
     var flavor;
-    if(speed == "LOW" && ((1<=count) && (count <=20))) 
+
     if((1<=count) && (count <= 20))
     {
         if(speed == "LOW") flavor = "m1.tiny";

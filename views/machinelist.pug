@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="app.js" type="text/javascript"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+<div class="header">
+	<input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+	<label for="openSidebarMenu" class="sidebarIconToggle">
+		<div class="spinner diagonal part-1"></div>
+		<div class="spinner horizontal"></div>
+		<div class="spinner diagonal part-2"></div>
+		</label>
+	<div id="sidebarMenu">
+	<ul class="sidebarMenuInner">
+		<li>OPENSTACK <span>IOT</span></li>
+		<li><a href="https://vanila.io" target="_blank">기기 등록</a></li>
+		<li><a href="machinelist.html" target="_blank">기기 목록</a></li>
+		<li><a href="https://twitter.com/plavookac" target="_blank">VM 목록</a></li>
+		<li><a href="https://www.youtube.com/channel/UCDfZM0IK6RBgud8HYGFXAJg" target="_blank">youtube</a></li>
+		<li><a href="https://www.linkedin.com/in/plavookac/" target="_blank">Linkedin</a></li>
+	</ul>
+	</div>
+</div>
+
+	<div class="container" style="padding-top:80px;">
+		<div class="col-md-12">
+			<h3 class="text-center">등록된 기기 목록</h3>
+			<hr>
+		</div>
+	</div>
+
+	<div class="container col-xs-12 col-sm-6 col-md-4 col-sm-offset-10 col-md-offset-4 text-center" style="padding-top:80px;">
+		<h4>조도 값: </h4>
+		<h3 style="color:red;">23</h3>
+	</div>
+
+	<div class="container">
+			<div class="col-md-6 col-md-offset-3 input-group">
+			<input type="submit" id="submit" class="btn btn-success btn-outline col-xs-12 col-sm-4 col-md-6 col-sm-offset-10 col-md-offset-5" style="height: 40px; width: 100px; font-size: 15px" value="갱신하기">
+			</div>
+			<br><br><br>
+			<hr>
+	</div>
+
+	<div class="container col-xs-12 col-sm-6 col-md-4 col-sm-offset-10 col-md-offset-4 text-center" style="padding-top:80px;">
+		<h4>조명 제어: </h4>
+		<label class="switch">
+			<input type="checkbox" id="light" name="light" value="light">
+			<span class="slider round"></span>
+		</label>
+	</div>
+
+	<div class="container col-xs-12 col-sm-6 col-md-4 col-sm-offset-10 col-md-offset-4 text-center" style="padding-top:30px;">
+		<h4>냉방 제어: </h4>
+		<label class="switch">
+			<input type="checkbox" id="motor" name="motor" value="motor">
+			<span class="slider round"></span>
+		</label>
+	</div>
+
+		<div class="container">
+				<div class="col-md-6 col-md-offset-3 input-group">
+					<br><br><br>
+				<input type="submit" id="submit" class="btn btn-success col-xs-12 col-sm-4 col-md-6 col-sm-offset-10 col-md-offset-4" style="height: 50px; width: 200px; font-size: 18px" value="입력">
+				</div>
+		</div>
+
+</body>
+
+</html>
