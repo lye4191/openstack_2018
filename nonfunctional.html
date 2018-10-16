@@ -41,17 +41,16 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="btn-group" role="group" aria-label="Basic example" style="padding-top: 50px;">
+		<div class="col-md-offset-2 btn-group" role="group" aria-label="Basic example" style="padding-top: 50px;">
 			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="name" onclick="btn_click(this.id)">이름 *</button>
 			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="speed" onclick="btn_click(this.id)">응답시간 *</button>
 			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="auto" onclick="btn_click(this.id)">고가용성 지원</button>
-			<button type="button" class="btn btn-primary btn-outline btn-style-yuni" id="speed" onclick="btn_click(this.id)">요구사항2</button>
 		</div>
 	</div>
 
 	<form action="/select/nonfunc/createstack" method="post">
 		<div class="container" style="margin: 0 auto;">
-			<ul class="list-yuni" style="visibility: hidden;" id="NameInput">
+			<ul class="col-md-offset-2 list-yuni" style="visibility: hidden;" id="NameInput">
 				<input type="text" name="fullname" style="border: 0px solid #D5D5D5; height:40px;" placeholder="가상머신 이름 입력..."><br>
 			</ul>
 			<ul class="list-group list-yuni" style="visibility: hidden;" id="speedList">

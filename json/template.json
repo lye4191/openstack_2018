@@ -18,7 +18,7 @@
             "hello_world": {
                 "type": "OS::Nova::Server",
                 "properties": {
-                    "key_name": "stackkey",
+                    "key_name": "adminkey",
                     "flavor": {
                         "get_param": "flavor"
                     },

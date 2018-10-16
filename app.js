@@ -116,7 +116,7 @@ app.post('/select/nonfunc/createstack', function(req, res, next){
 console.log(req.body);
 
 var flavor;
-var image="09e1182b-d088-4a1b-bdc8-b6b9e67cbcd3";
+var image="ee0f4e83-7aaa-46cb-898a-c2a074290947";
 var nonfuncContent = JSON.parse(JSON.stringify(req.body));
 flavor = DistinctResource(nonfuncContent, countNum);
 
