@@ -131,7 +131,7 @@ var heatHeaders = {"Content-Type" : "application/json",
                   "X-Auth-Token" :getToken};
 heatObject.headers = heatHeaders;
 client.post("http://164.125.70.13/heat-api/v1/36b011806ff042dba0a3b90e6e639ea2/stacks", heatObject, function(data, response) {
-    console.log("CompleteCreateStack!");
+    console.log(data);
     res.redirect('http://' + host + '/dashboard/project/stacks/');
 });
 

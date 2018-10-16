@@ -1,31 +1,49 @@
 {
     "files": {},
     "disable_rollback": true,
-    "parameters": {
-        "flavor": "m1.tiny"
-    },
-    "stack_name": "networkstack",
+    "stack_name": "teststack",
     "template": {
         "heat_template_version": "2013-05-23",
         "description": "Simple template to test heat commands",
         "parameters": {
-            "flavor": {
-                "default": "m1.tiny",
+            "vcpu": {
+                "default": "1",
+                "type": "string"
+            },
+            "disks": {
+                "default": "1",
+                "type": "string"
+            },
+            "rams": {
+                "default": "1024",
                 "type": "string"
             }
         },
         "resources": {
+            "flavor": {
+              "type": "OS::Nova::Flavor",
+              "properties":{
+                  "name": "default",
+                  "vcpus":{
+                      "get_param": "vcpu"
+                  },
+                  "disk":{
+                      "get_param": "disks"
+                  },
+                  "ram":{
+                      "get_param": "rams"
+                  }
+              }  
+            },
             "hello_world": {
                 "type": "OS::Nova::Server",
                 "properties": {
                     "key_name": "adminkey",
                     "flavor": {
-                        "get_param": "flavor"
+                        "get_resource": "flavor"
                     },
-                    "image": "5a997d9f-0724-430e-8101-f3ebdee64f0d",
-                    "networks": [{
-                        "allocate_network": "auto"
-                    }]
+                    "image": "ee0f4e83-7aaa-46cb-898a-c2a074290947",
+                    "user_data": "#!/bin/bash -xv\necho \"hello world\" &gt; /root/hello-world.txt\n"
                 }
             }
         }
