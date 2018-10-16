@@ -34,7 +34,6 @@ var countNum = 0;
 var led = false;
 var cool = false;
 var jodo = 25;
-
 /* 메인 페이지 */
 app.get('/', function(req, res){
 fs.readFile('index.html', function(err,data){
@@ -115,14 +114,17 @@ app.post('/select/nonfunc/createstack', function(req, res, next){
 
 console.log(req.body);
 
-var flavor;
+/* Disk, RAM, vCPU 순서대로 */ 
+var weight = new Array();
 var image="ee0f4e83-7aaa-46cb-898a-c2a074290947";
 var nonfuncContent = JSON.parse(JSON.stringify(req.body));
-flavor = DistinctResource(nonfuncContent, countNum);
+weight = DistinctResource(nonfuncContent, countNum);
 
 heatJsonContent.stack_name = req.body.fullname;
-heatJsonContent.parameters.flavor = flavor;
-heatJsonContent.template.resources.hello_world.properties.image = image;
+
+heatJsonContent.template.parameters.disks.default = weight[0];
+heatJsonContent.template.parameters.rams.default = weight[1]*1024;
+heatJsonContent.template.parameters.vcpu.default = weight[2];
 heatObject.data = heatJsonContent;
 
 var getToken = fs.readFileSync("token.txt", 'utf8');
@@ -147,7 +149,6 @@ var outsideJson = req.body.outsideName;
 
 app.get('/machinelist', function(req, res){
 fs.readFile('machinelist.pug', function(err,data){
-    console.log(req.body);
     res.writeHead(200, {"Content-Type" : "text/html"});
     res.end(data);
 });
@@ -156,7 +157,6 @@ fs.readFile('machinelist.pug', function(err,data){
 
 app.post('/machinelist', function(req, res, next){
     var sendData = {};
-    var jodosendData = '{"jodo" : true}';
     sendData.headers = {"Content-Type" : "application/json"};
     var parsingData = JSON.parse(JSON.stringify(req.body));
     console.log(res.body);
@@ -172,28 +172,31 @@ app.post('/machinelist', function(req, res, next){
 
         parsingData.COOL = cool;
     }
-    /*
+    
     if(parsingData.jodo != undefined){
-        sendData.data = jodosendData;
-        client.post("http://localhost:3000/jodo", sendData, function(data,response){
-            //console.log("jodo");
-            console.log(response.body);
+        console.log("!@#!#@#!#");
+        client.get("http://localhost:3000/jodo", function(req, res){
+           // var parsing = JSON.parse(JSON.stringify(req));
+            console.log(req);
+            //jodo = parseInt(parsing.jodo,10);
+            //console.log("jodo parsing : " , req.jodo);
+            jodo = req;
         });
     }
-*/
-    sendData.headers = {"Content-Type" : "application/json"};
-    sendData.data = parsingData;
-    console.log(sendData);
-    
-    client.post("http://localhost:3000", sendData, function(data, response) {
-     console.log("sendData!!!");
-    });
-    
-    parseLED = undefined;
-    parseCOOL = undefined;
-
+    else{
+        sendData.headers = {"Content-Type" : "application/json"};
+        sendData.data = parsingData;
+        console.log(sendData);
+        
+        client.post("http://localhost:3000/Ctrlmachine", sendData, function(data, response) {
+         console.log("sendData!!!");
+        });
+        
+        parseLED = undefined;
+        parseCOOL = undefined;
+    }
 // res.redirect('/machinelist');
-    res.render('machinelist',{ledvalue : led, coolvalue : cool});
+    res.render('machinelist',{ledvalue : led, coolvalue : cool, jodovalue : jodo});
 
 });
 
@@ -208,55 +211,96 @@ res.status(404).send('<h1>ERROR - 페이지를 찾을 수 없습니다.</h1>');
 
 function countMachine(data){
 
-var machineJson = data.machineName;
-var outsideJson = data.outsideName;
-var Count=0;
+    var machineJson = data.machineName;
+    var outsideJson = data.outsideName;
+    var Count=0;
 
-for(var i=0; i<machineJson.length; i++){
-    Count += parseInt(machineJson[i],10);
-}
-for(var j=0; j<outsideJson.length; j++){
-    Count += parseInt(outsideJson[j],10);
-}
+    for(var i=0; i<machineJson.length; i++){
+        Count += parseInt(machineJson[i],10);
+    }
+    for(var j=0; j<outsideJson.length; j++){
+        Count += parseInt(outsideJson[j],10);
+    }
 
-//console.log("count!!!" , Count);
-return Count;
+    console.log("count!!!" , Count);
+    return Count;
 
 }
 
 
 function DistinctResource(data, count){
 
-var speed = data.speedName;
-var flavor;
+    var speed = data.speedName;
+    var peoplenum = parseInt(data.peopleNum);
+    var weight = new Array();
 
-if((1<=count) && (count <= 20))
-{
-    if(speed == "LOW") flavor = "m1.tiny";
-    else if(speed == "MIDDLE") flavor = "m1.custom2";
-    else flavor = "m1.small";
-}
-if((21<=count) && (count <= 40))
-{
-    if(speed == "LOW") flavor = "m1.custom2";
-    else if(speed == "MIDDLE") flavor = "m1.small";
-    else flavor = "m1.medium";
-}
-if((41<=count) && (count <= 60))
-{
-    if(speed == "LOW") flavor = "m1.small";
-    else if(speed == "MIDDLE") flavor = "m1.medium";
-    else flavor = "m1.large";
-}
-if((61<=count) && (count <= 80))
-{
-    if(speed == "LOW") flavor = "m1.medium";
-    else flavor = "m1.large";
-}
-if((81<=count) && (count <= 100))
-{
-    flavor = "m1.xlarge";
-}
+    // 응답 속도 중요도
+    if(speed == "LOW") {
+        weight = [1, 3, 3];
+    }
+    else if(speed == "MIDDLE"){
+        weight = [2, 6, 6];
+    }
+    else {
+        weight = [3, 9, 9];
+    }
 
-return flavor;
+    // VM 접근 인원
+    if((1<=peoplenum) && (peoplenum <= 10)){
+        weight[0] += 2;
+        weight[1] += 1;
+        weight[2] += 1;
+    }
+    else if((11<=peoplenum) && (peoplenum <= 30)){
+        weight[0] += 4;
+        weight[1] += 2;
+        weight[2] += 2;
+    }
+    else if((31<=peoplenum) && (peoplenum <= 60)){
+        weight[0] += 6;
+        weight[1] += 3;
+        weight[2] += 3;
+    }
+    else if((61<=peoplenum) && (peoplenum <= 80)){
+        weight[0] += 8;
+        weight[1] += 4;
+        weight[2] += 4;
+    }
+    else if((81<=peoplenum) && (peoplenum <= 100)){
+        weight[0] += 10;
+        weight[1] += 5;
+        weight[2] += 5;
+    }
+
+    //총 기기수
+    if((1<=count) && (count <= 10)){
+        weight[0] += 2;
+        weight[1] += 1;
+        weight[2] += 1;
+    }
+    else if((11<=count) && (count <= 20)){
+        weight[0] += 4;
+        weight[1] += 2;
+        weight[2] += 2;
+    }
+    else if((21<=count) && (count <= 30)){
+        weight[0] += 6;
+        weight[1] += 3;
+        weight[2] += 3;
+    }
+    else if((31<=count) && (count <= 40)){
+        weight[0] += 8;
+        weight[1] += 4;
+        weight[2] += 4;
+    }
+    else if((41<=count) && (count <= 50)){
+        weight[0] += 10;
+        weight[1] += 5;
+        weight[2] += 5;
+    }
+
+
+    console.log("function in : ", weight);
+    return weight;
+
 }

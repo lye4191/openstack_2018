@@ -38,7 +38,7 @@
             "hello_world": {
                 "type": "OS::Nova::Server",
                 "properties": {
-                    "key_name": "adminkey",
+                    "key_name": "public",
                     "flavor": {
                         "get_resource": "flavor"
                     },
