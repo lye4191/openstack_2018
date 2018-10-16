@@ -33,6 +33,7 @@ var client = new Client();
 var countNum = 0;
 var led = false;
 var cool = false;
+var jodo = 25;
 
 /* 메인 페이지 */
 app.get('/', function(req, res){
@@ -155,10 +156,11 @@ fs.readFile('machinelist.pug', function(err,data){
 
 app.post('/machinelist', function(req, res, next){
     var sendData = {};
+    var jodosendData = '{"jodo" : true}';
     sendData.headers = {"Content-Type" : "application/json"};
     var parsingData = JSON.parse(JSON.stringify(req.body));
+    console.log(res.body);
 
-    console.log(parsingData);
     if(parsingData.LED) {
         if(led) led = false;
         else led = true;
@@ -170,28 +172,28 @@ app.post('/machinelist', function(req, res, next){
 
         parsingData.COOL = cool;
     }
-
-    console.log("led : ", led);
-    console.log("cool : ", cool);
+    /*
+    if(parsingData.jodo != undefined){
+        sendData.data = jodosendData;
+        client.post("http://localhost:3000/jodo", sendData, function(data,response){
+            //console.log("jodo");
+            console.log(response.body);
+        });
+    }
+*/
     sendData.headers = {"Content-Type" : "application/json"};
     sendData.data = parsingData;
-    
     console.log(sendData);
-
+    
     client.post("http://localhost:3000", sendData, function(data, response) {
-        console.log("sendData!!!");
+     console.log("sendData!!!");
     });
-
-    client.get("http://localhost:3000?led=true", function(data, response) {
-        console.log(data.body);
-       // console.log(response);
-        console.log("get");
-    });
-
+    
     parseLED = undefined;
     parseCOOL = undefined;
+
 // res.redirect('/machinelist');
-    res.render('machinelist' ,{ledvalue : led, coolvalue : cool});
+    res.render('machinelist',{ledvalue : led, coolvalue : cool});
 
 });
 
