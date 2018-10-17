@@ -23,7 +23,7 @@ html(lang='ko')
 					li
 						a(href='https://vanila.io', target='_blank') 기기 등록
 					li
-						a(href='machinelist.html', target='_blank') 기기 목록
+						a(href='/machinelist', target='_blank') 기기 목록
 		.container(style='padding-top:80px;')
 			.col-md-12
 				h3.text-center 등록된 기기 목록
@@ -41,12 +41,12 @@ html(lang='ko')
 				hr
 		form(action='/machinelist', method='post')
 			.container.col-xs-12.col-sm-6.col-md-4.col-sm-offset-10.col-md-offset-4.text-center(style='padding-top:80px;')
-				h4 조명 제어: #{ledvalue}
+				h4 조명 제어
 				label.switch
 					input#LED(type='checkbox', name='LED', onclick='toggle(this)')
 					span.slider.round
 			.container.col-xs-12.col-sm-6.col-md-4.col-sm-offset-10.col-md-offset-4.text-center(style='padding-top:30px;')
-				h4 냉방 제어: #{coolvalue}
+				h4 냉방 제어
 				label.switch
 					input#COOL(type='checkbox', name='COOL', onclick='toggle(this)')
 					span.slider.round
@@ -57,8 +57,8 @@ html(lang='ko')
 					br
 					input#submit.btn.btn-success.col-xs-12.col-sm-4.col-md-6.col-sm-offset-10.col-md-offset-4(type='submit', style='height: 50px; width: 200px; font-size: 18px;', value='입력')
 		script.
-			if (#{ledvalue}) document.getElementById("LED").checked = true
+			if (#{led}) document.getElementById("LED").checked = true
 			else document.getElementById("LED").checked = false
-			if (#{coolvalue}) document.getElementById("COOL").checked = true
+			if (#{cool}) document.getElementById("COOL").checked = true
 			else document.getElementById("COOL").checked = false
 

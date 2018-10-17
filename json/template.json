@@ -4,49 +4,170 @@
     "stack_name": "teststack",
     "template": {
         "heat_template_version": "2013-05-23",
-        "description": "Simple template to test heat commands",
         "parameters": {
-            "vcpu": {
-                "default": "1",
-                "type": "string"
-            },
-            "disks": {
-                "default": "1",
-                "type": "string"
-            },
-            "rams": {
-                "default": "1024",
-                "type": "string"
-            }
+          "custom_vcpus": {
+            "default": "1",
+            "type": "string"
+          },
+          "custom_disk": {
+            "default": "4",
+            "type": "string"
+          },
+          "custom_ram": {
+            "default": "1024",
+            "type": "string"
+          },
+          "stack_key": {
+            "default": "public",
+            "type": "string"
+          },
+          "image_name": {
+            "default": "ubuntu-config",
+            "type": "string"
+          },
+          "pulic_network": {
+            "default": "public",
+            "type": "string"
+          },
+          "private_network": {
+            "default": "private",
+            "type": "string"
+          },
+          "private_network_subnet": {
+            "default": "private-subnet",
+            "type": "string"
+          },
+          "custom_security_group_name": {
+            "default": "seq_group",
+            "type": "string"
+          }
         },
         "resources": {
-            "flavor": {
-              "type": "OS::Nova::Flavor",
-              "properties":{
-                  "name": "default",
-                  "vcpus":{
-                      "get_param": "vcpu"
-                  },
-                  "disk":{
-                      "get_param": "disks"
-                  },
-                  "ram":{
-                      "get_param": "rams"
-                  }
-              }  
-            },
-            "hello_world": {
-                "type": "OS::Nova::Server",
-                "properties": {
-                    "key_name": "public",
-                    "flavor": {
-                        "get_resource": "flavor"
-                    },
-                    "image": "ee0f4e83-7aaa-46cb-898a-c2a074290947",
-                    "user_data": "#!/bin/bash -xv\necho \"hello world\" &gt; /root/hello-world.txt\n"
-                }
+          "custom_flavor": {
+            "type": "OS::Nova::Flavor",
+            "properties": {
+              "name": "custom_flavor",
+              "vcpus": {
+                "get_param": "custom_vcpus"
+              },
+              "ram": {
+                "get_param": "custom_ram"
+              },
+              "disk": {
+                "get_param": "custom_disk"
+              }
             }
+          },
+          "node_server": {
+            "type": "OS::Nova::Server",
+            "properties": {
+              "key_name": {
+                "get_param": "stack_key"
+              },
+              "flavor": {
+                "get_resource": "custom_flavor"
+              },
+              "image": {
+                "get_param": "image_name"
+              },
+              "networks": [{"port": { "get_resource": "server_port" } }],
+              "user_data": {
+                "get_resource": "server_config"
+              },
+              "user_data_format": "RAW"
+            }
+          },
+          "server_port": {
+            "type": "OS::Neutron::Port",
+            "properties": {
+              "network_id": {
+                "get_param": "private_network"
+              },
+              "fixed_ips": [{"subnet_id": {"get_param": "private_network_subnet"}}],
+              "security_groups": [{"get_resource": "custom_security_group"}]
+            }
+          },
+          "server_floating_ip": {
+            "type": "OS::Neutron::FloatingIP",
+            "properties": {
+              "floating_network_id": {
+                "get_param": "pulic_network"
+              },
+              "port_id": {
+                "get_resource": "server_port"
+              }
+            }
+          },
+          "custom_security_group": {
+            "type": "OS::Neutron::SecurityGroup",
+            "properties": {
+              "name": {
+                "get_param": "custom_security_group_name"
+              },
+              "rules": [
+                {
+                  "remote_ip_prefix": "0.0.0.0/0",
+                  "protocol": "tcp",
+                  "port_range_min": "22",
+                  "port_range_max": "22"
+                },
+                {
+                  "remote_ip_prefix": "0.0.0.0/0",
+                  "protocol": "icmp"
+                },
+                {
+                  "remote_ip_prefix": "0.0.0.0/0",
+                  "protocol": "tcp",
+                  "port_range_min": "80",
+                  "port_range_max": "80"
+                },
+                {
+                  "remote_ip_prefix": "0.0.0.0/0",
+                  "protocol": "tcp",
+                  "port_range_min": "443",
+                  "port_range_max": "443"
+                },
+                {
+                  "remote_ip_prefix": "0.0.0.0/0",
+                  "protocol": "tcp",
+                  "port_range_min": "3000",
+                  "port_range_max": "3000"
+                }
+              ]
+            }
+          },
+          "server_config": {
+            "type": "OS::Heat::CloudConfig",
+            "properties": {
+              "cloud_config": {
+                "chpasswd": {
+                  "list": "|\nubuntu:5170",
+                  "expire": "False"
+                },
+                "package_update": "true",
+                "package_upgrade": "true",
+                "packages": ["npm", "nodejs"],
+                "runcmd": [
+                  "mkdir node",
+                  "cd node",
+                  "npm install express",
+                  "npm install body-parser",
+                  "npm install node-rest-client"
+                ]
+              }
+            }
+          }
+        },
+        "outputs": {
+          "server1_public_ip": {
+            "description": "Floating IP address of server1 in public network",
+            "value": { "get_attr": [ "server_floating_ip", "floating_ip_address" ] }
+          },
+          "flavor": {
+            "description": "flavor for this stack resources",
+            "value": { "get_attr": [ "custom_flavor", "extra_specs"]}
+          }
         }
-    },
+      },
     "timeout_mins": 60
 }
